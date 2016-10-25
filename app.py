@@ -28,8 +28,8 @@ def spyglass():
     }
     service_url = 'https://kgsearch.googleapis.com/v1/entities:search'
     url = service_url + '?' + urllib.urlencode(params)
-    response = request.get(url)
-    response_json = json.loads(response)
+    response = requests.get(url)
+    response_json = json.loads(response.content)
     return response_json
 
 
@@ -77,7 +77,7 @@ def login_required(test):
 @app.route('/')
 def home():
     #return render_template('pages/placeholder.home.html')
-    return spyglass()
+    return json.dumps(spyglass())
 
 
 @app.route('/about')
