@@ -13,10 +13,10 @@ import urllib
 import json
 
 
-api_key = os.env.get('api_key')
+api_key = os.environ.get('api_key')
 if api_key is None:
     # Backup API key load
-    with open('key_file.txt') as f:
+    with open('api_key') as f:
         api_key = f.readline()
 
 def spyglass():
