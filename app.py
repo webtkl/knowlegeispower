@@ -8,6 +8,39 @@ import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
+import requests
+import urllib
+import json
+
+
+api_key = os.env.get('api_key')
+if api_key is None:
+    # Backup API key load
+    with open('key_file.txt') as f:
+        api_key = f.readline()
+
+def spyglass():
+    params = {
+        'query': 'Lion',
+        'limit': 2,
+        'indent': True,
+        'key': api_key
+    }
+    service_url = 'https://kgsearch.googleapis.com/v1/entities:search'
+    url = service_url + '?' + urllib.urlencode(params)
+    response = request.get(url)
+    response_json = json.loads(response)
+    return response_json
+
+
+
+
+
+
+
+
+
+
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -43,7 +76,8 @@ def login_required(test):
 
 @app.route('/')
 def home():
-    return render_template('pages/placeholder.home.html')
+    #return render_template('pages/placeholder.home.html')
+    return spyglass()
 
 
 @app.route('/about')
